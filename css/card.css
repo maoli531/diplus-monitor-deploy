@@ -1,0 +1,209 @@
+/* ============================================================
+   卡片.css — VA-UI H5 卡片组件
+   白底卡片，模块间露底色(#F7F8FA)
+   支持: section标题(蓝条) + 数据行 + 卡片列表
+   v2.0 — 圆角升级、阴影升级、硬编码色收敛
+   ============================================================ */
+
+/* --- 页面容器 --- */
+/* 注意：.va-page 基础样式在 主题.css 的 H5页面布局骨架 中已定义 */
+
+.va-content {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--va-space-xl);
+  background: linear-gradient(to bottom, #E6F2FF, var(--va-bg-item));
+}
+
+/* --- 卡片 --- */
+.va-card {
+  background: var(--va-bg-base);
+  border-radius: var(--va-card-radius);
+  margin: var(--va-card-margin);
+  padding: var(--va-card-padding);
+  box-shadow: var(--va-card-shadow);
+  transition: box-shadow var(--va-duration-normal) var(--va-ease-out);
+}
+
+.va-card + .va-card {
+  margin-top: var(--va-space-sm);
+}
+
+/* --- 卡片按压(列表卡片可点击) --- */
+.va-card-clickable {
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: box-shadow var(--va-duration-normal) var(--va-ease-out),
+              transform var(--va-duration-fast) var(--va-ease-out);
+}
+
+.va-card-clickable:active {
+  transform: scale(0.985);
+  box-shadow: var(--va-elevation-2);
+}
+
+/* --- Section 标题(蓝条) --- */
+.va-section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 0;
+}
+
+.va-section-indicator {
+  width: 5px;
+  height: 15px;
+  border-radius: var(--va-radius-xs);
+  background: var(--va-primary);
+  margin-right: var(--va-space-sm);
+  flex-shrink: 0;
+}
+
+.va-section-title {
+  font: var(--va-font-title);
+  color: var(--va-text-primary);
+}
+
+/* --- 数据行(详情页) --- */
+.va-detail-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--va-border-light);
+  min-height: 20px;
+}
+
+.va-detail-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* 卡片内首行无顶部padding */
+.va-detail-row:first-child {
+  padding-top: 0;
+}
+
+.va-detail-label {
+  color: var(--va-text-placeholder);
+  font-size: 14px;
+  line-height: 1.5;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.va-detail-value {
+  color: var(--va-text-body);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: right;
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  word-break: break-all;
+}
+
+/* --- 卡片列表行（无分割线，靠间距区分） --- */
+.va-card-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 8px 0;
+  min-height: 20px;
+}
+
+.va-card-row:first-child {
+  padding-top: 0;
+}
+
+.va-card-row:last-child {
+  padding-bottom: 0;
+}
+
+.va-card-row-label {
+  color: var(--va-text-placeholder);
+  font-size: 14px;
+  line-height: 1.5;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.va-card-row-value {
+  color: var(--va-text-body);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: right;
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  word-break: break-all;
+}
+
+/* --- 列表卡片行 --- */
+.va-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.va-row + .va-row {
+  border-top: 1px solid var(--va-border-light);
+}
+
+.va-row-label {
+  color: var(--va-text-placeholder);
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-right: var(--va-space-sm);
+}
+
+.va-row-value {
+  color: var(--va-text-body);
+  font-size: 14px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+/* --- 卡片内 item 背景(必须与白色卡片区分) --- */
+.va-card-item {
+  background: var(--va-bg-item);
+  border-radius: var(--va-radius-md);
+  padding: 10px;
+}
+
+/* --- 详情页左右值布局 --- */
+.va-detail-value-text {
+  color: var(--va-text-body);
+  word-break: break-all;
+}
+
+/* --- 必填标记 --- */
+.va-required-mark {
+  color: var(--va-error);
+  margin-right: 4px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* --- 卡片进入动画 --- */
+.va-card-enter {
+  animation: va-fade-in var(--va-duration-slow) var(--va-ease-out);
+}
+
+/* --- 卡片列表 --- */
+.va-card-list {
+  padding: 0;
+}
+
+.va-card-list .va-card {
+  margin: 0 10px 10px;
+}
