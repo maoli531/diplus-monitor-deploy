@@ -1,0 +1,314 @@
+/* ============================================================
+   主题.css — VA-UI H5 组件库核心主题
+   基于项目规范 #396FFF 主色体系，CSS变量全局控制
+   对标 Ant Design Mobile 5 / Vant 4 视觉品质
+   v2.0 — 全面升级：4级elevation、圆角柔化、功能色变体、hover限制
+   ============================================================ */
+
+/* ==================== 1. CSS 变量体系 ==================== */
+:root {
+  /* --- 品牌色 --- */
+  --va-primary: #396FFF;
+  --va-primary-hover: #5C86FF;
+  --va-primary-active: #1A45E0;
+  --va-primary-light: #EBF1FF;
+  --va-primary-light-border: #B3CCFF;
+
+  /* --- 功能色(新增hover/active/light变体) --- */
+  --va-success: #52C41A;
+  --va-success-hover: #73D13D;
+  --va-success-active: #389E0D;
+  --va-success-light: #F6FFED;
+  --va-success-light-border: #B7EB8F;
+
+  --va-warning: #FAAD14;
+  --va-warning-hover: #FFC53D;
+  --va-warning-active: #D48806;
+  --va-warning-light: #FFFBE6;
+  --va-warning-light-border: #FFE58F;
+
+  --va-error: #FF4D4F;
+  --va-error-hover: #FF7875;
+  --va-error-active: #CF1322;
+  --va-error-light: #FFF2F0;
+  --va-error-light-border: #FFCCC7;
+
+  --va-link: #396FFF;
+
+  /* --- 中性色 --- */
+  --va-text-primary: #262626;
+  --va-text-body: #333333;
+  --va-text-secondary: #595959;
+  --va-text-placeholder: #8C8C8C;
+  --va-text-disabled: #BFBFBF;
+  --va-border: #D9D9D9;
+  --va-border-light: #E8E8E8;
+  --va-bg-base: #FFFFFF;
+  --va-bg-light: #FAFAFA;
+  --va-bg-item: #F7F8FA;
+  --va-bg-disabled: #F5F5F5;
+  --va-overlay: rgba(0, 0, 0, 0.45);
+
+  /* --- 间距 --- */
+  --va-space-xs: 4px;
+  --va-space-sm: 8px;
+  --va-space-md: 12px;
+  --va-space-lg: 16px;
+  --va-space-xl: 24px;
+
+  /* --- 圆角(升级: 更柔和现代) --- */
+  --va-radius-xs: 4px;
+  --va-radius-sm: 6px;
+  --va-radius-md: 8px;
+  --va-radius-lg: 12px;
+  --va-radius-xl: 16px;
+  --va-radius-xxl: 20px;
+  --va-radius-full: 9999px;
+
+  /* --- 字体 --- */
+  --va-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  --va-font-title: 600 16px/1.4;
+  --va-font-body: 400 14px/1.5;
+  --va-font-caption: 400 12px/1.5;
+
+  /* --- H5按钮 --- */
+  --va-btn-height: 42px;
+  --va-btn-radius: var(--va-radius-md);
+  --va-btn-font: 400 14px/1;
+
+  /* --- H5输入框 --- */
+  --va-input-height: 44px;
+  --va-input-radius: var(--va-radius-md);
+
+  /* --- H5卡片 --- */
+  --va-card-radius: var(--va-radius-lg);
+  --va-card-padding: 10px;
+  --va-card-margin: 10px;
+  --va-card-shadow: var(--va-elevation-1);
+
+  /* --- Elevation 阴影4级(核心升级) --- */
+  --va-elevation-1: 0 1px 2px rgba(0,0,0,0.03), 0 1px 6px rgba(0,0,0,0.06);
+  --va-elevation-2: 0 3px 6px rgba(0,0,0,0.06), 0 6px 16px rgba(0,0,0,0.08);
+  --va-elevation-3: 0 6px 16px rgba(0,0,0,0.08), 0 12px 28px rgba(0,0,0,0.12);
+  --va-elevation-4: 0 12px 24px rgba(0,0,0,0.12), 0 20px 40px rgba(0,0,0,0.16);
+
+  /* 兼容旧变量名 */
+  --va-shadow-sm: var(--va-elevation-1);
+  --va-shadow-md: var(--va-elevation-2);
+  --va-shadow-lg: var(--va-elevation-3);
+  --va-shadow-focus: 0 0 0 3px rgba(57,111,255,0.12);
+
+  /* --- 动画 --- */
+  --va-duration-fast: 0.15s;
+  --va-duration-normal: 0.25s;
+  --va-duration-slow: 0.35s;
+  --va-ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --va-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --va-ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --va-ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* --- z-index --- */
+  --va-z-base: 0;
+  --va-z-popup: 1000;
+  --va-z-toast: 1100;
+}
+
+/* ==================== 2. 全局 Reset ==================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--va-font-family);
+  font: var(--va-font-body);
+  color: var(--va-text-body);
+  background-color: #F7F8FA;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--va-link);
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+input, textarea, select, button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ==================== 2.5 H5页面布局骨架 ==================== */
+
+.va-phone-shell {
+  max-width: 375px;
+  margin: 0 auto;
+  height: 100vh;
+  position: relative;
+  background: #F7F8FA;
+  overflow: hidden;
+}
+
+.va-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.va-h5-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px 10px 0;
+  box-sizing: border-box;
+}
+
+.va-scroll-locked .va-h5-content,
+.va-scroll-locked .va-content,
+.va-scroll-locked .va-page {
+  overflow: hidden !important;
+}
+
+/* ==================== 3. 动画关键帧 ==================== */
+
+@keyframes va-ripple {
+  0% { transform: scale(0); opacity: 0.4; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes va-fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes va-fade-out {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes va-slide-up {
+  0% { transform: translate3d(0, 100%, 0); opacity: 0; }
+  100% { transform: translate3d(0, 0, 0); opacity: 1; }
+}
+
+@keyframes va-slide-down-out {
+  0% { transform: translate3d(0, 0, 0); opacity: 1; }
+  100% { transform: translate3d(0, 100%, 0); opacity: 0; }
+}
+
+@keyframes va-slide-right {
+  0% { transform: translate3d(100%, 0, 0); opacity: 0; }
+  100% { transform: translate3d(0, 0, 0); opacity: 1; }
+}
+
+@keyframes va-zoom-in {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes va-zoom-out {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.8); opacity: 0; }
+}
+
+@keyframes va-modal-in {
+  0% { transform: translate3d(-50%, -50%, 0) scale(0.85); opacity: 0; }
+  100% { transform: translate3d(-50%, -50%, 0) scale(1); opacity: 1; }
+}
+
+@keyframes va-modal-out {
+  0% { transform: translate3d(-50%, -50%, 0) scale(1); opacity: 1; }
+  100% { transform: translate3d(-50%, -50%, 0) scale(0.85); opacity: 0; }
+}
+
+@keyframes va-press {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
+@keyframes va-toast-in {
+  0% { transform: translate3d(-50%, -50%, 0) scale(0.8); opacity: 0; }
+  100% { transform: translate3d(-50%, -50%, 0) scale(1); opacity: 1; }
+}
+
+@keyframes va-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==================== 4. 通用工具类 ==================== */
+
+.va-ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.va-ripple-container .va-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(0);
+  animation: va-ripple 0.5s ease-out;
+  pointer-events: none;
+}
+
+.va-ripple-dark .va-ripple {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.va-safe-top {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+}
+
+.va-safe-bottom {
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.va-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.va-ellipsis-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.va-no-select {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.va-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.va-clearfix::after {
+  content: '';
+  display: table;
+  clear: both;
+}
