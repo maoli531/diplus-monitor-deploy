@@ -1,0 +1,350 @@
+/* ============================================================
+   表单.css — VA-UI H5 表单组件
+   Input / Select / Textarea / Radio / Switch / Picker
+   垂直布局：label在上，input在下
+   v2.0 — transition拆分、hover限制、focus光晕升级、圆角升级
+   ============================================================ */
+
+/* --- 表单容器 --- */
+.va-form {
+  padding: 0 16px;
+}
+
+/* --- 表单项 --- */
+.va-form-item {
+  padding: 10px 0;
+  position: relative;
+}
+
+.va-form-item + .va-form-item {
+  /* 无分割线，靠间距区分 */
+}
+
+/* --- 标签 --- */
+.va-form-label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--va-text-body);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.va-form-label-required .va-required-mark {
+  margin-right: 4px;
+}
+
+/* --- 输入框基础 --- */
+.va-input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--va-input-height);
+  padding: 0 12px;
+  font-size: 14px;
+  color: var(--va-text-body);
+  background: var(--va-bg-base);
+  border: 1px solid var(--va-border);
+  border-radius: var(--va-input-radius);
+  transition: border-color var(--va-duration-normal) var(--va-ease-out),
+              box-shadow var(--va-duration-normal) var(--va-ease-out);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+@media (hover: hover) {
+  .va-input:hover {
+    border-color: var(--va-primary);
+  }
+}
+
+.va-input:focus {
+  border-color: var(--va-primary);
+  box-shadow: var(--va-shadow-focus);
+}
+
+.va-input::placeholder {
+  color: var(--va-text-placeholder);
+}
+
+/* --- 输入框禁用态 --- */
+.va-input[disabled],
+.va-input.va-disabled {
+  background: var(--va-bg-disabled);
+  color: var(--va-text-disabled);
+  cursor: not-allowed;
+  border-color: var(--va-border-light);
+}
+
+@media (hover: hover) {
+  .va-input[disabled]:hover,
+  .va-input.va-disabled:hover {
+    border-color: var(--va-border-light);
+    box-shadow: none;
+  }
+}
+
+/* --- 输入框错误态 --- */
+.va-input-error {
+  border-color: var(--va-error) !important;
+}
+
+.va-input-error:focus {
+  box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.12) !important;
+}
+
+/* --- 错误提示文字 --- */
+.va-form-error {
+  font-size: 12px;
+  color: var(--va-error);
+  margin-top: 4px;
+  line-height: 1.5;
+  animation: va-fade-in var(--va-duration-fast);
+}
+
+/* --- 文本域 --- */
+.va-textarea {
+  display: block;
+  width: 100%;
+  min-height: 80px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--va-text-body);
+  background: var(--va-bg-base);
+  border: 1px solid var(--va-border);
+  border-radius: var(--va-input-radius);
+  resize: vertical;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color var(--va-duration-normal) var(--va-ease-out),
+              box-shadow var(--va-duration-normal) var(--va-ease-out);
+  line-height: 1.5;
+}
+
+.va-textarea:focus {
+  border-color: var(--va-primary);
+  box-shadow: var(--va-shadow-focus);
+}
+
+.va-textarea::placeholder {
+  color: var(--va-text-placeholder);
+}
+
+/* --- Select 触发器 --- */
+.va-select {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--va-input-height);
+  padding: 0 32px 0 12px;
+  font-size: 14px;
+  color: var(--va-text-body);
+  background: var(--va-bg-base);
+  border: 1px solid var(--va-border);
+  border-radius: var(--va-input-radius);
+  cursor: pointer;
+  transition: border-color var(--va-duration-normal) var(--va-ease-out),
+              box-shadow var(--va-duration-normal) var(--va-ease-out);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (hover: hover) {
+  .va-select:hover {
+    border-color: var(--va-primary);
+  }
+}
+
+.va-select-active {
+  border-color: var(--va-primary);
+  box-shadow: var(--va-shadow-focus);
+}
+
+/* --- Select 箭头 --- */
+.va-select-arrow {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  width: 16px;
+  height: 16px;
+  transition: transform var(--va-duration-normal) var(--va-ease-out);
+  pointer-events: none;
+  fill: var(--va-text-secondary);
+}
+
+.va-select-active .va-select-arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* --- Select Placeholder --- */
+.va-select-placeholder {
+  color: var(--va-text-placeholder);
+}
+
+/* --- Select 下拉面板 --- */
+.va-select-dropdown {
+  position: absolute;
+  background: var(--va-bg-base);
+  border-radius: var(--va-radius-md);
+  box-shadow: var(--va-elevation-2);
+  z-index: var(--va-z-popup);
+  max-height: 240px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  animation: va-fade-in var(--va-duration-fast);
+  padding: 4px 0;
+}
+
+.va-select-option {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 12px;
+  font-size: 14px;
+  color: var(--va-text-body);
+  cursor: pointer;
+  transition: background var(--va-duration-fast);
+  position: relative;
+}
+
+@media (hover: hover) {
+  .va-select-option:hover {
+    background: var(--va-bg-light);
+  }
+}
+
+.va-select-option-selected {
+  color: var(--va-primary);
+  font-weight: 600;
+  background: var(--va-primary-light);
+}
+
+/* 选中项圆点已移除 */
+
+.va-select-option-disabled {
+  color: var(--va-text-disabled);
+  cursor: not-allowed;
+}
+
+/* --- Radio --- */
+.va-radio-group {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.va-radio {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  min-height: 44px;
+  transition: opacity var(--va-duration-fast);
+}
+
+.va-radio:active {
+  opacity: 0.7;
+}
+
+.va-radio-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.va-radio-circle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--va-border);
+  border-radius: 50%;
+  margin-right: 8px;
+  transition: border-color var(--va-duration-normal) var(--va-ease-out),
+              box-shadow var(--va-duration-normal) var(--va-ease-out);
+  flex-shrink: 0;
+}
+
+.va-radio-circle::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: transparent;
+  transition: transform var(--va-duration-normal) var(--va-ease-back),
+              background var(--va-duration-normal) var(--va-ease-out);
+  transform: scale(0);
+}
+
+.va-radio-checked .va-radio-circle {
+  border-color: var(--va-primary);
+}
+
+.va-radio-checked .va-radio-circle::after {
+  background: var(--va-primary);
+  transform: scale(1);
+}
+
+.va-radio-label {
+  font-size: 14px;
+  color: var(--va-text-body);
+  /* 选中不改变文字颜色 */
+}
+
+/* --- Switch --- */
+.va-switch {
+  position: relative;
+  display: inline-flex;
+  width: 44px;
+  height: 22px;
+  border-radius: var(--va-radius-full);
+  background: var(--va-border);
+  cursor: pointer;
+  transition: background var(--va-duration-normal) var(--va-ease-out);
+  flex-shrink: 0;
+}
+
+.va-switch-active {
+  background: var(--va-primary);
+}
+
+.va-switch-handle {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  transition: transform var(--va-duration-normal) var(--va-ease-spring);
+}
+
+.va-switch-active .va-switch-handle {
+  transform: translateX(22px);
+}
+
+.va-switch-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --- 表单验证抖动动画 --- */
+@keyframes va-form-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+.va-form-shake {
+  animation: va-form-shake 0.3s;
+}
