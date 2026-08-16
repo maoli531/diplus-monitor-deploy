@@ -1,0 +1,253 @@
+/* ============================================================
+   按钮.css — VA-UI H5 按钮组件
+   对标 Ant Design Mobile 5 动画效果
+   支持: primary / default / dashed / text / link / danger
+   状态: hover / active / disabled / loading / block
+   v2.0 — 圆角升级、transition拆分、hover限制
+   ============================================================ */
+
+/* --- 基础 --- */
+.va-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--va-btn-height);
+  padding: 0 16px;
+  font: var(--va-btn-font);
+  font-size: 14px;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: var(--va-btn-radius);
+  cursor: pointer;
+  transition: background var(--va-duration-normal) var(--va-ease-out),
+              border-color var(--va-duration-normal) var(--va-ease-out),
+              color var(--va-duration-normal) var(--va-ease-out),
+              box-shadow var(--va-duration-normal) var(--va-ease-out),
+              transform var(--va-duration-fast) var(--va-ease-out);
+  -webkit-user-select: none;
+  user-select: none;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
+  min-width: 60px;
+}
+
+.va-btn:active {
+  transform: scale(0.97);
+}
+
+/* --- Primary --- */
+.va-btn-primary {
+  background: var(--va-primary);
+  color: #FFFFFF;
+  border-color: var(--va-primary);
+  box-shadow: 0 2px 0 rgba(57, 111, 255, 0.1);
+}
+
+@media (hover: hover) {
+  .va-btn-primary:hover {
+    background: var(--va-primary-hover);
+    border-color: var(--va-primary-hover);
+    box-shadow: 0 4px 12px rgba(57, 111, 255, 0.25);
+  }
+}
+
+.va-btn-primary:active {
+  background: var(--va-primary-active);
+  border-color: var(--va-primary-active);
+  box-shadow: 0 1px 2px rgba(57, 111, 255, 0.15);
+}
+
+/* --- Default --- */
+.va-btn-default {
+  background: var(--va-bg-base);
+  color: var(--va-text-primary);
+  border-color: var(--va-border);
+}
+
+@media (hover: hover) {
+  .va-btn-default:hover {
+    color: var(--va-primary);
+    border-color: var(--va-primary);
+  }
+}
+
+.va-btn-default:active {
+  color: var(--va-primary-active);
+  border-color: var(--va-primary-active);
+  background: var(--va-bg-light);
+}
+
+/* --- Danger --- */
+.va-btn-danger {
+  background: var(--va-error);
+  color: #FFFFFF;
+  border-color: var(--va-error);
+  box-shadow: 0 2px 0 rgba(255, 77, 79, 0.1);
+}
+
+@media (hover: hover) {
+  .va-btn-danger:hover {
+    background: var(--va-error-hover);
+    border-color: var(--va-error-hover);
+    box-shadow: 0 4px 12px rgba(255, 77, 79, 0.25);
+  }
+}
+
+.va-btn-danger:active {
+  background: var(--va-error-active);
+  border-color: var(--va-error-active);
+  box-shadow: 0 1px 2px rgba(255, 77, 79, 0.15);
+}
+
+/* --- Dashed --- */
+.va-btn-dashed {
+  background: var(--va-bg-base);
+  color: var(--va-text-primary);
+  border-color: var(--va-border);
+  border-style: dashed;
+}
+
+@media (hover: hover) {
+  .va-btn-dashed:hover {
+    color: var(--va-primary);
+    border-color: var(--va-primary);
+  }
+}
+
+/* --- Text --- */
+.va-btn-text {
+  background: transparent;
+  color: var(--va-text-primary);
+  border-color: transparent;
+  min-width: auto;
+  padding: 0 8px;
+}
+
+@media (hover: hover) {
+  .va-btn-text:hover {
+    background: var(--va-bg-light);
+  }
+}
+
+/* --- Link --- */
+.va-btn-link {
+  background: transparent;
+  color: var(--va-primary);
+  border-color: transparent;
+  min-width: auto;
+  padding: 0 8px;
+}
+
+@media (hover: hover) {
+  .va-btn-link:hover {
+    color: var(--va-primary-hover);
+  }
+}
+
+/* --- Block 全宽 --- */
+.va-btn-block {
+  display: flex;
+  width: 100%;
+}
+
+/* --- 尺寸(按钮组) --- */
+.va-btn-group {
+  display: flex;
+  gap: var(--va-space-sm);
+}
+
+.va-btn-group .va-btn {
+  flex: 1;
+}
+
+/* --- Disabled --- */
+.va-btn.va-disabled,
+.va-btn[disabled] {
+  background: var(--va-bg-disabled);
+  color: var(--va-text-disabled);
+  border-color: var(--va-border-light);
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.va-btn-primary.va-disabled,
+.va-btn-primary[disabled] {
+  background: var(--va-bg-disabled);
+  color: var(--va-text-disabled);
+  border-color: var(--va-border-light);
+  box-shadow: none;
+}
+
+/* --- Loading --- */
+.va-btn-loading {
+  pointer-events: none;
+  position: relative;
+  opacity: 0.7;
+}
+
+.va-btn-loading::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: va-spin 0.6s linear infinite;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+/* --- 底部固定按钮组 --- */
+.va-btn-fixed-bottom {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: var(--va-space-sm);
+  padding: 12px 16px;
+  padding-bottom: calc(12px + constant(safe-area-inset-bottom));
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  background: var(--va-bg-base);
+  border-top: 1px solid var(--va-border-light);
+  z-index: 10;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
+}
+
+.va-btn-fixed-bottom .va-btn {
+  flex: 1;
+}
+
+/* --- 按钮间2个时左次右主 --- */
+.va-btn-fixed-bottom .va-btn:not(:last-child) {
+  flex: 1;
+}
+
+.va-btn-fixed-bottom .va-btn:last-child {
+  flex: 1;
+}
+
+/* --- 圆形按钮 --- */
+.va-btn-circle {
+  border-radius: 50%;
+  min-width: var(--va-btn-height);
+  padding: 0;
+  width: var(--va-btn-height);
+}
+
+/* --- 按钮涟漪动效 --- */
+.va-btn .va-ripple {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.va-btn-default .va-ripple,
+.va-btn-dashed .va-ripple,
+.va-btn-text .va-ripple {
+  background: rgba(0, 0, 0, 0.06);
+}
