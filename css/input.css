@@ -1,0 +1,432 @@
+/* ============================================================
+   输入框.css — VA-UI H5 输入框组件
+   各类型: 身份证/手机号/信用代码/邮箱/车牌等
+   含清除按钮、正则校验、错误提示
+   v2.0 — transition拆分、hover限制、focus光晕升级
+   ============================================================ */
+
+/* --- 输入框包裹器 --- */
+.va-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--va-input-height);
+  background: var(--va-bg-base);
+  border: 1px solid var(--va-border);
+  border-radius: var(--va-input-radius);
+  transition: border-color var(--va-duration-normal) var(--va-ease-out),
+              box-shadow var(--va-duration-normal) var(--va-ease-out);
+  overflow: hidden;
+}
+
+@media (hover: hover) {
+  .va-input-wrapper:hover {
+    border-color: var(--va-primary);
+  }
+}
+
+.va-input-wrapper.va-input-focused {
+  border-color: var(--va-primary);
+  box-shadow: var(--va-shadow-focus);
+}
+
+/* --- 输入框本体 --- */
+.va-input-wrapper .va-input-inner {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  height: 100%;
+  padding: 0 12px;
+  font-size: 14px;
+  color: var(--va-text-body);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.va-input-wrapper .va-input-inner::placeholder {
+  color: var(--va-text-placeholder);
+}
+
+/* --- 前缀 --- */
+.va-input-prefix {
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  color: var(--va-text-secondary);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* --- 后缀 --- */
+.va-input-suffix {
+  display: flex;
+  align-items: center;
+  padding-right: 12px;
+  color: var(--va-text-secondary);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* --- 清除按钮 --- */
+.va-input-clear {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-right: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--va-text-disabled);
+  border-radius: 50%;
+  transition: color var(--va-duration-fast), background var(--va-duration-fast);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (hover: hover) {
+  .va-input-clear:hover {
+    color: var(--va-text-secondary);
+    background: var(--va-bg-light);
+  }
+}
+
+.va-input-clear:active {
+  color: var(--va-text-body);
+}
+
+/* 有值时显示清除按钮 */
+.va-input-wrapper.va-input-has-value .va-input-clear {
+  display: flex;
+}
+
+/* --- 字数统计(输入框内部右侧居中) --- */
+.va-input-count {
+  font-size: 12px;
+  color: var(--va-text-disabled);
+  padding-right: 8px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  align-self: center;
+  line-height: 1;
+  margin-left: auto;
+}
+
+/* 剩余字数少于5时变红 */
+.va-input-count.va-input-count-low {
+  color: var(--va-error);
+}
+
+/* --- 禁用态 --- */
+.va-input-wrapper.va-input-disabled {
+  background: var(--va-bg-disabled);
+  cursor: not-allowed;
+}
+
+@media (hover: hover) {
+  .va-input-wrapper.va-input-disabled:hover {
+    border-color: var(--va-border);
+    box-shadow: none;
+  }
+}
+
+.va-input-wrapper.va-input-disabled .va-input-inner {
+  color: var(--va-text-disabled);
+}
+
+/* --- 错误态 --- */
+.va-input-wrapper.va-input-error {
+  border-color: var(--va-error) !important;
+}
+
+.va-input-wrapper.va-input-error.va-input-focused {
+  box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.12) !important;
+}
+
+/* --- 错误提示 --- */
+.va-input-error-msg {
+  font-size: 12px;
+  color: var(--va-error);
+  margin-top: 4px;
+  line-height: 1.5;
+  animation: va-fade-in var(--va-duration-fast);
+  padding-left: 0;
+}
+
+/* --- 成功态 --- */
+.va-input-wrapper.va-input-success {
+  border-color: var(--va-success) !important;
+}
+
+.va-input-wrapper.va-input-success.va-input-focused {
+  box-shadow: 0 0 0 3px rgba(82, 196, 26, 0.12) !important;
+}
+
+/* --- 验证图标 --- */
+.va-input-validate-icon {
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+  flex-shrink: 0;
+}
+
+/* --- 类型标签(身份证号等) --- */
+.va-input-type-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 6px;
+  font-size: 11px;
+  border-radius: var(--va-radius-xs);
+  margin-left: 6px;
+  flex-shrink: 0;
+}
+
+.va-input-type-tag-idcard {
+  background: var(--va-primary-light);
+  color: var(--va-primary);
+}
+
+.va-input-type-tag-phone {
+  background: var(--va-success-light);
+  color: var(--va-success);
+}
+
+.va-input-type-tag-credit {
+  background: var(--va-warning-light);
+  color: var(--va-warning);
+}
+
+.va-input-type-tag-email {
+  background: #F9F0FF;
+  color: #722ED1;
+}
+
+.va-input-type-tag-plate {
+  background: #FFF2E8;
+  color: #FA541C;
+}
+
+.va-input-type-tag-tax {
+  background: #E6FFFB;
+  color: #13C2C2;
+}
+
+.va-input-type-tag-bank {
+  background: #F0F5FF;
+  color: #2F54EB;
+}
+
+.va-input-type-tag-password {
+  background: var(--va-error-light);
+  color: var(--va-error);
+}
+
+/* --- 搜索前缀图标 --- */
+.va-input-prefix-icon {
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  color: var(--va-text-placeholder);
+  flex-shrink: 0;
+}
+
+.va-input-wrapper.va-input-with-prefix .va-input-inner {
+  padding-left: 6px;
+}
+
+/* --- 密码eye SVG显隐 --- */
+.va-input-eye-closed .va-input-eye-open {
+  display: none;
+}
+
+.va-input-eye-closed .va-input-eye-shut {
+  display: block;
+}
+
+.va-input-eye-opened .va-input-eye-open {
+  display: block;
+}
+
+.va-input-eye-opened .va-input-eye-shut {
+  display: none;
+}
+
+.va-input-eye .va-input-eye-open,
+.va-input-eye .va-input-eye-shut {
+  width: 18px;
+  height: 18px;
+}
+
+/* --- Textarea包裹器 --- */
+.va-textarea-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 80px;
+  background: var(--va-bg-base);
+  border: 1px solid var(--va-border);
+  border-radius: var(--va-input-radius);
+  transition: border-color var(--va-duration-normal) var(--va-ease-out),
+              box-shadow var(--va-duration-normal) var(--va-ease-out);
+  overflow: hidden;
+}
+
+@media (hover: hover) {
+  .va-textarea-wrapper:hover {
+    border-color: var(--va-primary);
+  }
+}
+
+.va-textarea-wrapper.va-input-focused {
+  border-color: var(--va-primary);
+  box-shadow: var(--va-shadow-focus);
+}
+
+.va-textarea-wrapper .va-textarea-inner {
+  width: 100%;
+  min-height: 80px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--va-text-body);
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.va-textarea-wrapper .va-textarea-inner::placeholder {
+  color: var(--va-text-placeholder);
+}
+
+.va-textarea-wrapper .va-textarea-count {
+  text-align: right;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--va-text-disabled);
+}
+
+/* --- 搜索框 --- */
+.va-input-wrapper.va-input-search .va-input-inner {
+  padding-left: 0;
+}
+
+.va-input-search-icon {
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  color: var(--va-text-placeholder);
+}
+
+/* --- 密码可见切换 --- */
+.va-input-eye {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-right: 4px;
+  cursor: pointer;
+  color: var(--va-text-secondary);
+  flex-shrink: 0;
+  border-radius: 50%;
+  transition: background var(--va-duration-fast);
+}
+
+@media (hover: hover) {
+  .va-input-eye:hover {
+    background: var(--va-bg-light);
+  }
+}
+
+/* --- 邮箱域名选择器 --- */
+.va-input-email-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.va-input-email-row .va-input-inner {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  height: 100%;
+  padding: 0 8px;
+  font-size: 14px;
+  color: var(--va-text-body);
+  min-width: 0;
+}
+
+.va-input-email-at {
+  color: var(--va-text-placeholder);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.va-input-email-domain {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--va-text-body);
+  padding: 0 8px;
+  height: 100%;
+  cursor: pointer;
+  flex-shrink: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 24px;
+  min-width: 90px;
+}
+
+/* --- 多行输入（textarea / multiline模式） --- */
+.va-input-wrapper.va-input-multiline {
+  min-height: 100px;
+  height: auto;
+  align-items: flex-start;
+  padding: 0;
+  position: relative;
+}
+
+.va-input-multiline .va-input-textarea {
+  width: 100%;
+  min-height: 100px;
+  height: auto;
+  padding: 10px 12px 24px;
+  resize: vertical;
+  overflow-y: auto;
+  line-height: 1.5;
+  font-size: 14px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+/* 多行输入字数统计：右下角内部 */
+.va-input-multiline .va-input-count {
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  font-size: 12px;
+  color: var(--va-text-placeholder);
+  pointer-events: none;
+  background: linear-gradient(to left, var(--va-bg-base) 30%, transparent);
+  padding-left: 8px;
+}
+
+.va-input-multiline .va-input-count-low {
+  color: var(--va-error);
+}
+
+/* --- 银行卡4位分隔 --- */
+.va-input-bank .va-input-inner {
+  letter-spacing: 1px;
+  font-variant-numeric: tabular-nums;
+}
